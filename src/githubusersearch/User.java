@@ -88,4 +88,80 @@ public class User extends JSONObject{
     
     }
     
+    // Setter
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
+    }
+
+    public void setGravatarId(String gravatarId) {
+        this.gravatarId = gravatarId;
+    }
+
+    public void setApiURL(String apiURL) {
+        this.apiURL = apiURL;
+    }
+
+    public void setHtmlURL(String htmlURL) {
+        this.htmlURL = htmlURL;
+    }
+
+    public void setReposURL(String reposURL) {
+        this.reposURL = reposURL;
+    }
+
+    public void setFollowersURL(String followersURL) {
+        this.followersURL = followersURL;
+    }
+
+    public void setRepos(ArrayList<Repository> repos) {
+        this.repos = repos;
+    }
+    
+    // Getter 
+
+    public int getId() {
+        return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getAvatarURL() {
+        return avatarURL;
+    }
+
+    public String getGravatarId() {
+        return gravatarId;
+    }
+
+    public String getApiURL() {
+        return apiURL;
+    }
+
+    public String getHtmlURL() {
+        return htmlURL;
+    }
+
+    public String getReposURL() {
+        return reposURL;
+    }
+
+    public String getFollowersURL() {
+        return followersURL;
+    }
+
+    public ArrayList<Repository> getRepos() {
+        return repos;
+    }
+    
+    
 }

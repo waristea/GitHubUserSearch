@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import javax.swing.JFrame;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,10 +53,19 @@ public class GithubUserSearch {
     String url = "https://api.github.com/search/users?q=tom+repos:%3E42+followers:%3E1000&per_page=5&sort=stars&order=desc";
     JSONObject json = readJsonFromUrl(url);
     JSONArray jsonUserArray = json.getJSONArray("items");
+    ArrayList<User> userList = new ArrayList<>();
     
     for(int i=0; i<jsonUserArray.length(); ++i){
         User user = new User((JSONObject) jsonUserArray.get(i));
-        user.printUser();
+        //user.printUser();
+        userList.add(user);
     }
+    
+    CombinedLayout frame = new CombinedLayout(userList);
+
+    frame.pack();
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(500, 400);
+    frame.setVisible(true);
   }
 }
