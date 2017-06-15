@@ -1,7 +1,6 @@
 
 package githubusersearch;
 
-import static githubusersearch.GithubUserSearch.readJsonArrayFromUrl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,44 +32,19 @@ public class User extends JSONObject{
     //int score;
     //boolean siteAdmin;
     
-    ArrayList<Repository> repos = new ArrayList<>();
+    ArrayList<Repository> repoList = new ArrayList<>();
    
-    public User(JSONObject jo){
-        try{
-            this.id = jo.getInt("id");
-            this.login = jo.getString("login");
-            this.avatarURL = jo.getString("avatar_url");
-            this.gravatarId = jo.getString("gravatar_id");
-            this.apiURL = jo.getString("url");
-            this.htmlURL = jo.getString("html_url");
-            this.reposURL = jo.getString("repos_url");
-            this.followersURL = jo.getString("followers_url");
-            //this.followingURL = jo.getString("following_url");
-            //this.gistsURL = jo.getString("gists_url");
-            //this.starredURL = jo.getString("starred_url");
-            //this.subscriptionsURL = jo.getString("subscriptions_url");
-            //this.organizationsURL = jo.getString("organizations_url");
-            //this.eventsURL = jo.getString("events_url");
-            //this.receivedEventsURL = jo.getString("received_events_url");
-            //this.score = jo.getInt("score");
-            //this.siteAdmin = jo.getBoolean("site_admin");
-            
-            JSONArray jsonRepoArray = readJsonArrayFromUrl(reposURL.concat("?per_page=100"));
-            // Handle repos>100
-            // Reminder : Make if statement for empty string 
-        
-            for(int i = jsonRepoArray.length(); i>0; --i){
-                JSONObject jsonRepoObject = (JSONObject) jsonRepoArray.get(i-1);
-                Repository repo = new Repository(jsonRepoObject);
-                
-                repos.add(repo);
-            }
-            
-        }catch(JSONException je){
-            System.err.println(je.getMessage());
-        }catch(IOException ioe){
-            System.err.println(ioe.getMessage());
-        }
+    public User(int id, String login, String avatarURL, String gravatarId, String apiURL, 
+                String htmlURL,String reposURL, String followersURL, ArrayList<Repository> repoList){
+        this.id = id;
+        this.login = login;
+        this.avatarURL = avatarURL;
+        this.gravatarId = gravatarId;
+        this.apiURL = apiURL;
+        this.htmlURL = htmlURL;
+        this.reposURL = reposURL;
+        this.followersURL = followersURL;
+        this.repoList = repoList;
     }
     
     public void printUser(){
@@ -80,8 +54,8 @@ public class User extends JSONObject{
         System.out.println("HTML URL : " + htmlURL);
         System.out.println("Repos URL : " + reposURL);
         System.out.println("----------------------------------------------");
-        for(int i = repos.size(); i>0; --i){
-            Repository repo = repos.get(i-1);
+        for(int i = repoList.size(); i>0; --i){
+            Repository repo = repoList.get(i-1);
             System.out.println(repo.name);
         }
         System.out.println("_______________________________________________");
@@ -121,8 +95,8 @@ public class User extends JSONObject{
         this.followersURL = followersURL;
     }
 
-    public void setRepos(ArrayList<Repository> repos) {
-        this.repos = repos;
+    public void setRepoList(ArrayList<Repository> repos) {
+        this.repoList = repos;
     }
     
     // Getter 
@@ -159,8 +133,8 @@ public class User extends JSONObject{
         return followersURL;
     }
 
-    public ArrayList<Repository> getRepos() {
-        return repos;
+    public ArrayList<Repository> getRepoList() {
+        return repoList;
     }
     
     
