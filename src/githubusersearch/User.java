@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -33,6 +34,7 @@ public class User extends JSONObject{
     //boolean siteAdmin;
     
     ArrayList<Repository> repoList = new ArrayList<>();
+    ImageIcon userImageIcon;
    
     public User(int id, String login, String avatarURL, String gravatarId, String apiURL, 
                 String htmlURL,String reposURL, String followersURL, ArrayList<Repository> repoList){
@@ -99,6 +101,10 @@ public class User extends JSONObject{
         this.repoList = repos;
     }
     
+    public void setUserImageIcon(ImageIcon userImageIcon){
+        this.userImageIcon = userImageIcon;
+    }
+    
     // Getter 
 
     public int getId() {
@@ -137,5 +143,7 @@ public class User extends JSONObject{
         return repoList;
     }
     
-    
+    public ImageIcon getUserImageIcon(){
+        return userImageIcon;
+    }
 }

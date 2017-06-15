@@ -62,7 +62,7 @@ public class Header implements ActionListener, KeyListener, MouseListener{
                         new EmptyBorder(
                                 new Insets(10, 20, 10, 20))));
 
-        // JButton - Search Button
+        // JButton - Advanced Search Button
 
         advancedSearchButton = new JButton("Advanced Search");
         advancedSearchButton.setForeground(Color.WHITE);
@@ -113,7 +113,7 @@ public class Header implements ActionListener, KeyListener, MouseListener{
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode()==KeyEvent.VK_ENTER){
-            System.out.println(searchBox.getText());
+            searched = searchBox.getText();
         }
     }
 
@@ -146,5 +146,15 @@ public class Header implements ActionListener, KeyListener, MouseListener{
     public void mouseExited(MouseEvent e) {
         advancedSearchButton.setForeground(Color.WHITE);
         advancedSearchButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+    
+    // Getter
+    public String getSearched(){
+        return searched;
+    }
+    
+    // Setter
+    public void setSearched(String searched){
+        this.searched = searched;
     }
 }

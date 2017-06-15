@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,12 +16,13 @@ import javax.swing.SwingUtilities;
 public class UserPanel {
     JPanel userPanel = new JPanel();
 
-    JButton userImage = new JButton("userImage");
-    JButton username = new JButton("username");
-    JButton description = new JButton("description");
+    JButton userImage = new JButton("");
+    JButton username = new JButton("");
+    JButton description = new JButton("");
 
     public UserPanel(User user){
         username.setText(user.getLogin());
+        userImage.setIcon(user.getUserImageIcon());
         //description.setText();
         
         
@@ -53,4 +55,15 @@ public class UserPanel {
     protected JPanel getUserPanel(){
             return userPanel;
     }
+    
+    // Setter
+    protected void setUserImage(ImageIcon userImageIcon){
+        userImage.setIcon(userImageIcon);
+    }
+    
+    // Getter
+    protected ImageIcon getUserImage(){
+        return (ImageIcon) userImage.getIcon();
+    }
+    
 }
