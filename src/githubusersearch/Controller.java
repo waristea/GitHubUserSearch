@@ -12,6 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -20,7 +22,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+/**
+ *
+ * @author William
+ */
 public class Controller {
+
+    /**
+     *
+     */
+    public static CombinedLayout combinedLayout;
+    
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
@@ -66,6 +78,13 @@ public class Controller {
 	return resizedImage;
     }
     
+    /**
+     *
+     * @param url
+     * @return
+     * @throws MalformedURLException
+     * @throws IOException
+     */
     public static ImageIcon readImageIconFromURL(String url) throws MalformedURLException, IOException{
         BufferedImage image = ImageIO.read(new URL(url));
         int type = image.getType();
@@ -76,13 +95,22 @@ public class Controller {
         return imageIcon;
     }
     
+    /**
+     *
+     * @param url
+     * @return
+     * @throws IOException
+     * @throws JSONException
+     */
     public static ArrayList<User> getUserList(String url) throws IOException, JSONException{
         JSONObject json = readJsonFromUrl(url);
         JSONArray jsonUserArray = json.getJSONArray("items");
         ArrayList<User> userList = new ArrayList<>();
         
-        for(int i=0; i<jsonUserArray.length(); ++i){
+        //for(int i=0; i<jsonUserArray.length(); ++i){
+        for(int i=0; i<5; ++i){
             try{
+                //System.out.println("Trying : "+(i+1));
                 JSONObject jo = (JSONObject) jsonUserArray.get(i);
                 ArrayList<Repository> repos = new ArrayList<>();
 
@@ -95,11 +123,13 @@ public class Controller {
                 String reposURL = jo.getString("repos_url");
                 String followersURL = jo.getString("followers_url");
                 
+                //System.out.println(reposURL);
+                
                 JSONArray jsonRepoArray = Controller.readJsonArrayFromUrl(reposURL.concat("?per_page=100"));
                 // Handle repos>100
                 // Reminder : Make if statement for empty string 
-
-                for(int j = jsonRepoArray.length(); j>0; --j){
+                //System.out.println("Tried for "+reposURL+"&per_page=100");
+                for(int j = 5; j>0; --j){
                     JSONObject jsonRepoObject = (JSONObject) jsonRepoArray.get(j-1);
                     Repository repo = new Repository(jsonRepoObject);
 
@@ -123,5 +153,29 @@ public class Controller {
         }
         
         return userList;
+    }
+
+    static void search(String url) throws IOException{
+        try {
+            // Get UserList
+            //String appId = "?client_id=919135325e47a148f207&client_secret=e1d85be38fdcc8e3b41bfa95310a44bb9fefd351";
+            String keyword = "https://api.github.com/search/users?q="+url;
+            System.out.println(keyword);
+            ArrayList<User> userList = getUserList(keyword);
+            
+            // Refresh JPanel 
+            combinedLayout.getContentPane().removeAll();
+            combinedLayout.setSearchedList(userList);
+            
+            
+            Controller.combinedLayout.pack();
+            Controller.combinedLayout.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Controller.combinedLayout.setSize(500, 400);
+            Controller.combinedLayout.setVisible(true);
+            combinedLayout.repaint();
+                
+        } catch (JSONException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

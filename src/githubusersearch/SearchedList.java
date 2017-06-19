@@ -10,21 +10,36 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class ListPanel implements ActionListener{	
+/**
+ *
+ * @author William
+ */
+public class SearchedList implements ActionListener{	
     JFrame listFrame = new JFrame();
     JPanel listPanel = new JPanel();
     JScrollPane scrollPane;
 
-    public ListPanel(){
+    /**
+     *
+     */
+    public SearchedList(){
         listPanel.setLayout(new GridBagLayout());
         listPanel.setBackground(new Color(238, 238, 238));
         scrollPane = new JScrollPane(listPanel);
     }
     
+    /**
+     *
+     * @return
+     */
     protected JScrollPane getListPane(){
         return scrollPane;
     }
 
+    /**
+     *
+     * @param addedPanel
+     */
     protected void addPanel(JPanel addedPanel){
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.VERTICAL;

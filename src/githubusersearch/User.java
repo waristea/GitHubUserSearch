@@ -14,6 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+/**
+ *
+ * @author William
+ */
 public class User extends JSONObject{
     int id;
     String login;
@@ -36,6 +40,18 @@ public class User extends JSONObject{
     ArrayList<Repository> repoList = new ArrayList<>();
     ImageIcon userImageIcon;
    
+    /**
+     *
+     * @param id
+     * @param login
+     * @param avatarURL
+     * @param gravatarId
+     * @param apiURL
+     * @param htmlURL
+     * @param reposURL
+     * @param followersURL
+     * @param repoList
+     */
     public User(int id, String login, String avatarURL, String gravatarId, String apiURL, 
                 String htmlURL,String reposURL, String followersURL, ArrayList<Repository> repoList){
         this.id = id;
@@ -49,6 +65,9 @@ public class User extends JSONObject{
         this.repoList = repoList;
     }
     
+    /**
+     *
+     */
     public void printUser(){
         System.out.println("Login : " + login);
         System.out.println("Avatar URL : " + avatarURL);
@@ -65,84 +84,166 @@ public class User extends JSONObject{
     }
     
     // Setter
+
+    /**
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @param login
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+    /**
+     *
+     * @param avatarURL
+     */
     public void setAvatarURL(String avatarURL) {
         this.avatarURL = avatarURL;
     }
 
+    /**
+     *
+     * @param gravatarId
+     */
     public void setGravatarId(String gravatarId) {
         this.gravatarId = gravatarId;
     }
 
+    /**
+     *
+     * @param apiURL
+     */
     public void setApiURL(String apiURL) {
         this.apiURL = apiURL;
     }
 
+    /**
+     *
+     * @param htmlURL
+     */
     public void setHtmlURL(String htmlURL) {
         this.htmlURL = htmlURL;
     }
 
+    /**
+     *
+     * @param reposURL
+     */
     public void setReposURL(String reposURL) {
         this.reposURL = reposURL;
     }
 
+    /**
+     *
+     * @param followersURL
+     */
     public void setFollowersURL(String followersURL) {
         this.followersURL = followersURL;
     }
 
+    /**
+     *
+     * @param repos
+     */
     public void setRepoList(ArrayList<Repository> repos) {
         this.repoList = repos;
     }
     
+    /**
+     *
+     * @param userImageIcon
+     */
     public void setUserImageIcon(ImageIcon userImageIcon){
         this.userImageIcon = userImageIcon;
     }
     
     // Getter 
 
+    /**
+     *
+     * @return
+     */
+
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAvatarURL() {
         return avatarURL;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getGravatarId() {
         return gravatarId;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getApiURL() {
         return apiURL;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getHtmlURL() {
         return htmlURL;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getReposURL() {
         return reposURL;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFollowersURL() {
         return followersURL;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Repository> getRepoList() {
         return repoList;
     }
     
+    /**
+     *
+     * @return
+     */
     public ImageIcon getUserImageIcon(){
         return userImageIcon;
     }

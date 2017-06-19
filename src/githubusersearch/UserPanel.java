@@ -13,6 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+/**
+ *
+ * @author William
+ */
 public class UserPanel {
     JPanel userPanel = new JPanel();
 
@@ -20,6 +24,10 @@ public class UserPanel {
     JButton username = new JButton("");
     JButton description = new JButton("");
 
+    /**
+     *
+     * @param user
+     */
     public UserPanel(User user){
         username.setText(user.getLogin());
         userImage.setIcon(user.getUserImageIcon());
@@ -52,16 +60,30 @@ public class UserPanel {
         userPanel.setBackground(Color.WHITE);
     }
     
+    /**
+     *
+     * @return
+     */
     protected JPanel getUserPanel(){
             return userPanel;
     }
     
     // Setter
+
+    /**
+     *
+     * @param userImageIcon
+     */
     protected void setUserImage(ImageIcon userImageIcon){
         userImage.setIcon(userImageIcon);
     }
     
     // Getter
+
+    /**
+     *
+     * @return
+     */
     protected ImageIcon getUserImage(){
         return (ImageIcon) userImage.getIcon();
     }

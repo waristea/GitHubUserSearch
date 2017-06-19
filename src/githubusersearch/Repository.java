@@ -4,6 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+/**
+ *
+ * @author William
+ */
 public class Repository {
     int id;
     String name;
@@ -11,6 +15,10 @@ public class Repository {
     String description;
     String htmlURL;
     
+    /**
+     *
+     * @param jo
+     */
     public Repository(JSONObject jo){
         try{
             id = jo.getInt("id");
@@ -22,6 +30,10 @@ public class Repository {
             System.err.println(je.getMessage());
         }
     }
+
+    /**
+     *
+     */
     public void printRepo(){
         System.out.println("ID : " + id);
         System.out.println("Name : " + name);

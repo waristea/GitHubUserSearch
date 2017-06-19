@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,8 +27,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+/**
+ *
+ * @author William
+ */
 public class Header implements ActionListener, KeyListener, MouseListener{	
-
     JPanel headerPanel = new JPanel();
     JFrame headerFrame = new JFrame();
     JButton advancedSearchButton;
@@ -34,6 +39,9 @@ public class Header implements ActionListener, KeyListener, MouseListener{
     Image gitHubImage;
     String searched = "";
 
+    /**
+     *
+     */
     public Header(){
         // JButton - GitHubLogo
         JLabel gitHubImageLabel = new JLabel();
@@ -97,6 +105,10 @@ public class Header implements ActionListener, KeyListener, MouseListener{
         headerPanel.setVisible(true);
     }
 
+    /**
+     *
+     * @return
+     */
     protected JPanel getHeaderPanel(){
         return headerPanel;
     }
@@ -114,6 +126,11 @@ public class Header implements ActionListener, KeyListener, MouseListener{
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode()==KeyEvent.VK_ENTER){
             searched = searchBox.getText();
+            try {
+                Controller.search(searched);
+            } catch (IOException ex) {
+                Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -149,11 +166,21 @@ public class Header implements ActionListener, KeyListener, MouseListener{
     }
     
     // Getter
+
+    /**
+     *
+     * @return
+     */
     public String getSearched(){
         return searched;
     }
     
     // Setter
+
+    /**
+     *
+     * @param searched
+     */
     public void setSearched(String searched){
         this.searched = searched;
     }

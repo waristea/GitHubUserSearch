@@ -43,8 +43,15 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
+/**
+ *
+ * @author William
+ */
 public class CombinedLayout extends JFrame{
-        
+    Container paneOut;
+    JPanel paneIn;
+    Header header;
+    /*
     public CombinedLayout(ArrayList<User> userList){
         Container paneOut = getContentPane();
 
@@ -52,16 +59,16 @@ public class CombinedLayout extends JFrame{
         paneIn.setBorder(BorderFactory.createLineBorder(new Color(36, 41, 46)));
         paneIn.setLayout(new BorderLayout());
 
-        // ListPanel
-        ListPanel listPanelTemp = new ListPanel(); // Panel pembungkus semua list user
-        listPanelTemp.addPanel(new UserPanel(userList.get(0)).getUserPanel());
-        JScrollPane listPanel = listPanelTemp.getListPane(); // Berisi informasi user
+        // SearchedList
+        SearchedList searchResult = new SearchedList(); // Panel pembungkus semua list user
+        searchResult.addPanel(new UserPanel(userList.get(0)).getUserPanel());
+        JScrollPane listPanel = searchResult.getListPane(); // Berisi informasi user
         listPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
         paneIn.add(listPanel, BorderLayout.CENTER);
 
         // Header
-        Header header = new Header();
+        header = new Header();
         JPanel headerPanel = header.getHeaderPanel();
 
         paneIn.add(headerPanel, BorderLayout.NORTH);
@@ -72,7 +79,7 @@ public class CombinedLayout extends JFrame{
 
         paneIn.add(footerPanel, BorderLayout.SOUTH);
 
-        /*
+        
         // Gutter
         Gutter gutterEast = new Gutter();
         JPanel gutterPanelEast = gutterEast.getGutterPanel();
@@ -82,10 +89,98 @@ public class CombinedLayout extends JFrame{
 
         paneIn.add(gutterPanelEast, BorderLayout.EAST);
         paneIn.add(gutterPanelWest, BorderLayout.WEST);
-        */
+        
         paneOut.add(paneIn);
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.setVisible(true);
+    }
+    */
+    
+    /**
+     *
+     */
+    public CombinedLayout(){
+        paneOut = getContentPane();
+        paneIn = new JPanel();
+        header = new Header();
+        
+        JPanel headerPanel = header.getHeaderPanel();
+        paneIn.add(headerPanel, BorderLayout.NORTH);
+        
+        paneOut.add(paneIn);
+        
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.setVisible(true);
+    }
+    
+    // Setter
+
+    /**
+     *
+     * @param userList
+     */
+    public void setSearchedList(ArrayList<User> userList){
+        SearchedList searchResult = new SearchedList(); // Panel pembungkus semua list user
+        searchResult.addPanel(new UserPanel(userList.get(0)).getUserPanel());
+        
+        JScrollPane listPanel = searchResult.getListPane(); // Berisi informasi user
+        listPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        
+        resetPaneOut();
+        resetPaneIn();
+        paneIn.add(listPanel, BorderLayout.CENTER);
+        paneOut.add(paneIn);
+    }
+    
+    /**
+     *
+     */
+    public void resetPaneIn(){
+        paneIn = new JPanel();
+        
+        paneIn.setBorder(BorderFactory.createLineBorder(new Color(36, 41, 46)));
+        paneIn.setLayout(new BorderLayout());
+        
+        JPanel headerPanel = header.getHeaderPanel();
+        paneIn.add(headerPanel, BorderLayout.NORTH);
+        
+    }
+    
+    /**
+     *
+     */
+    public void resetPaneOut(){
+        paneOut.removeAll();
+    }
+    
+    /**
+     *
+     * @param addedPanel
+     * @param layout
+     */
+    public void addPaneIn(JPanel addedPanel, int layout){
+        resetPaneOut();
+        paneIn.add(addedPanel, layout);
+        paneOut.add(paneIn);
+    }
+    
+    // Getter
+
+    /**
+     *
+     * @return
+     */
+    public Container getPaneOut(){
+        return paneOut;
+    }
+    
+    /**
+     *
+     * @return
+     */
+    protected String getSearched(){
+        return header.getSearched();
     }
 }
