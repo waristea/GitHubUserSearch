@@ -32,6 +32,7 @@ public class Controller {
      *
      */
     public static CombinedLayout combinedLayout;
+    public static RepoList repoList = null;
     
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -64,6 +65,33 @@ public class Controller {
         } finally {
           is.close();
         }
+    }
+    
+    public static void showUserRepos(String reposURL) throws IOException, JSONException{
+        JSONArray jsonRepoArray = Controller.readJsonArrayFromUrl(reposURL.concat("?per_page=100"));
+        // Handle repos>100
+        // Reminder : Make if statement for empty string 
+        System.out.println("Repo size : "+jsonRepoArray.length());
+        ArrayList<Repository> repos = new ArrayList<>();
+        
+        for(int j = 0; j<jsonRepoArray.length(); ++j){
+            JSONObject jsonRepoObject = (JSONObject) jsonRepoArray.get(j);
+            Repository repo = new Repository(jsonRepoObject);
+
+            repos.add(repo);
+        }
+        
+        if (repoList!=null) 
+            repoList.getContentPane().removeAll();
+        
+        repoList = new RepoList(repos);
+        
+        repoList.pack();
+        //repoList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        repoList.setSize(500, 400);
+        repoList.setVisible(true);
+        repoList.setTitle("Repos");
+        combinedLayout.repaint();
     }
     
     private static BufferedImage resizeImage(BufferedImage originalImage, int type){
@@ -114,8 +142,7 @@ public class Controller {
             try{
                 System.out.println("Trying : "+(i+1));
                 JSONObject jo = (JSONObject) jsonUserArray.get(i);
-                ArrayList<Repository> repos = new ArrayList<>();
-
+                
                 int id = jo.getInt("id");
                 String login = jo.getString("login");
                 String avatarURL = jo.getString("avatar_url");
@@ -125,18 +152,7 @@ public class Controller {
                 String reposURL = jo.getString("repos_url");
                 String followersURL = jo.getString("followers_url");
                 
-                JSONArray jsonRepoArray = Controller.readJsonArrayFromUrl(reposURL.concat("?per_page=100"));
-                // Handle repos>100
-                // Reminder : Make if statement for empty string 
-                //System.out.println("Tried for "+reposURL+"&per_page=100");
-                for(int j = 0; j<3; ++j){
-                    JSONObject jsonRepoObject = (JSONObject) jsonRepoArray.get(j);
-                    Repository repo = new Repository(jsonRepoObject);
-
-                    repos.add(repo);
-                }
-                
-                User user = new User(id, login, avatarURL, gravatarId, apiURL, htmlURL, reposURL, followersURL, repos);
+                User user = new User(id, login, avatarURL, gravatarId, apiURL, htmlURL, reposURL, followersURL, null);
                 if (user.getAvatarURL()!=""&&user.getAvatarURL()!=null){
                     user.setUserImageIcon(readImageIconFromURL(user.getAvatarURL()));
                 }
@@ -185,6 +201,7 @@ public class Controller {
             Controller.combinedLayout.pack();
             Controller.combinedLayout.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             Controller.combinedLayout.setSize(500, 400);
+            Controller.combinedLayout.setTitle("GitHub User Searcher");
             Controller.combinedLayout.setVisible(true);
             combinedLayout.repaint();
                 

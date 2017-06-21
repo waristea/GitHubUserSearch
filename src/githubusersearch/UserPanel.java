@@ -1,6 +1,7 @@
 package githubusersearch;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -8,6 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 
@@ -16,23 +20,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.json.JSONException;
 
 /**
  *
  * @author William
  */
 public class UserPanel implements MouseListener{
+    User user;
+    
     JPanel userPanel = new JPanel();
 
     JLabel userImage = new JLabel("");
     JButton username = new JButton("");
     JLabel description = new JLabel("");
-
+    
     /**
      *
      * @param user
      */
     public UserPanel(User user){
+        this.user = user;
+        
         username.setText(user.getLogin());
         userImage.setIcon(user.getUserImageIcon());
         //description.setText();
@@ -66,6 +75,7 @@ public class UserPanel implements MouseListener{
         
         gbc.gridx = 1;
         gbc.gridy = 1;
+        
         userPanel.add(description, gbc);
         userPanel.setBackground(Color.WHITE);
     }
@@ -100,20 +110,21 @@ public class UserPanel implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Controller.showUserRepos(user.getReposURL());
+        } catch (IOException ex) {
+            Logger.getLogger(UserPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(UserPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void mousePressed(MouseEvent e) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void mouseReleased(MouseEvent e) {}
 
-    
     @Override
     public void mouseEntered(MouseEvent e) {
         username.setForeground(Color.BLUE);

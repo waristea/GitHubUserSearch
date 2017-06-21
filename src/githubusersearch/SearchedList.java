@@ -1,6 +1,7 @@
 package githubusersearch;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,8 +28,9 @@ public class SearchedList implements ActionListener{
      *
      */
     public SearchedList(){
-        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
+        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         
+        listPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         listPanel.setBackground(new Color(238, 238, 238));
         scrollPane = new JScrollPane(listPanel);
         listPanel.setPreferredSize(new Dimension(400, 500));
@@ -47,20 +49,6 @@ public class SearchedList implements ActionListener{
      * @param addedPanel
      */
     protected void addPanel(JPanel addedPanel){
-        /*
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.VERTICAL;
-        gbc.anchor = GridBagConstraints.NORTH;
-        gbc.weighty = 1.0;
-        gbc.insets = new Insets(0,0,0,0);
-
-        gbc.gridwidth = 1;
-        gbc.gridheight = 2;
-        
-        gbc.gridx = 0;
-        System.out.println(listPanel.getComponentCount());
-        gbc.gridy = listPanel.getComponentCount();
-        */
         listPanel.add(addedPanel);
         scrollPane = new JScrollPane(listPanel);
     }
