@@ -106,11 +106,13 @@ public class Controller {
         JSONObject json = readJsonFromUrl(url);
         JSONArray jsonUserArray = json.getJSONArray("items");
         ArrayList<User> userList = new ArrayList<>();
+        System.out.println(jsonUserArray.length());
+        int fetchedAmt = jsonUserArray.length();
+        fetchedAmt = (fetchedAmt>5) ? 5 : fetchedAmt;
         
-        //for(int i=0; i<jsonUserArray.length(); ++i){
-        for(int i=0; i<5; ++i){
+        for(int i=0; i<fetchedAmt; ++i){
             try{
-                //System.out.println("Trying : "+(i+1));
+                System.out.println("Trying : "+(i+1));
                 JSONObject jo = (JSONObject) jsonUserArray.get(i);
                 ArrayList<Repository> repos = new ArrayList<>();
 
@@ -123,14 +125,12 @@ public class Controller {
                 String reposURL = jo.getString("repos_url");
                 String followersURL = jo.getString("followers_url");
                 
-                //System.out.println(reposURL);
-                
                 JSONArray jsonRepoArray = Controller.readJsonArrayFromUrl(reposURL.concat("?per_page=100"));
                 // Handle repos>100
                 // Reminder : Make if statement for empty string 
                 //System.out.println("Tried for "+reposURL+"&per_page=100");
-                for(int j = 5; j>0; --j){
-                    JSONObject jsonRepoObject = (JSONObject) jsonRepoArray.get(j-1);
+                for(int j = 0; j<3; ++j){
+                    JSONObject jsonRepoObject = (JSONObject) jsonRepoArray.get(j);
                     Repository repo = new Repository(jsonRepoObject);
 
                     repos.add(repo);
@@ -158,15 +158,29 @@ public class Controller {
     static void search(String url) throws IOException{
         try {
             // Get UserList
-            //String appId = "?client_id=919135325e47a148f207&client_secret=e1d85be38fdcc8e3b41bfa95310a44bb9fefd351";
-            String keyword = "https://api.github.com/search/users?q="+url;
-            System.out.println(keyword);
+            
+            // Tanpa autentifikasi
+            // String keyword = "https://api.github.com/search/users?q="+url;
+            // String authString = "";
+            
+            // Dengan Authentifikasi
+            // Menggunakan clientSecret
+            String clientId = "919135325e47a148f207";
+            String clientSecret = "e1d85be38fdcc8e3b41bfa95310a44bb9fefd351";
+            String authStringApp = "?client_id="+clientId+"&client_secret="+clientSecret;
+            String authString = "";
+            readJsonFromUrl("https://api.github.com/rate_limit"+authStringApp);
+            
+            // Menggunakan Personal Access Token
+            // String personalAccessToken = "";
+            // String authString = "?access_token="+personalAccessToken;
+            
+            String keyword = "https://api.github.com/search/users?q="+url+authString;
             ArrayList<User> userList = getUserList(keyword);
             
             // Refresh JPanel 
             combinedLayout.getContentPane().removeAll();
             combinedLayout.setSearchedList(userList);
-            
             
             Controller.combinedLayout.pack();
             Controller.combinedLayout.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

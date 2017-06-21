@@ -51,51 +51,6 @@ public class CombinedLayout extends JFrame{
     Container paneOut;
     JPanel paneIn;
     Header header;
-    /*
-    public CombinedLayout(ArrayList<User> userList){
-        Container paneOut = getContentPane();
-
-        JPanel paneIn = new JPanel();
-        paneIn.setBorder(BorderFactory.createLineBorder(new Color(36, 41, 46)));
-        paneIn.setLayout(new BorderLayout());
-
-        // SearchedList
-        SearchedList searchResult = new SearchedList(); // Panel pembungkus semua list user
-        searchResult.addPanel(new UserPanel(userList.get(0)).getUserPanel());
-        JScrollPane listPanel = searchResult.getListPane(); // Berisi informasi user
-        listPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-
-        paneIn.add(listPanel, BorderLayout.CENTER);
-
-        // Header
-        header = new Header();
-        JPanel headerPanel = header.getHeaderPanel();
-
-        paneIn.add(headerPanel, BorderLayout.NORTH);
-
-        // Footer
-        Footer footer = new Footer();
-        JPanel footerPanel = footer.getFooterPanel();
-
-        paneIn.add(footerPanel, BorderLayout.SOUTH);
-
-        
-        // Gutter
-        Gutter gutterEast = new Gutter();
-        JPanel gutterPanelEast = gutterEast.getGutterPanel();
-
-        Gutter gutterWest = new Gutter();
-        JPanel gutterPanelWest = gutterWest.getGutterPanel();
-
-        paneIn.add(gutterPanelEast, BorderLayout.EAST);
-        paneIn.add(gutterPanelWest, BorderLayout.WEST);
-        
-        paneOut.add(paneIn);
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-        this.setVisible(true);
-    }
-    */
     
     /**
      *
@@ -123,7 +78,9 @@ public class CombinedLayout extends JFrame{
      */
     public void setSearchedList(ArrayList<User> userList){
         SearchedList searchResult = new SearchedList(); // Panel pembungkus semua list user
-        searchResult.addPanel(new UserPanel(userList.get(0)).getUserPanel());
+        for(int i=0; i<=userList.size()-1; ++i){
+            searchResult.addPanel(new UserPanel(userList.get(i)).getUserPanel());
+        }
         
         JScrollPane listPanel = searchResult.getListPane(); // Berisi informasi user
         listPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
