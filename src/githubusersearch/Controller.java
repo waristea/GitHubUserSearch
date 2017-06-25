@@ -33,6 +33,7 @@ public class Controller {
      */
     public static CombinedLayout combinedLayout;
     public static RepoList repoList = null;
+    public static SearchSettings searchSettingsFrame = new SearchSettings();
     
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -91,7 +92,20 @@ public class Controller {
         repoList.setSize(500, 400);
         repoList.setVisible(true);
         repoList.setTitle("Repos");
-        combinedLayout.repaint();
+    }
+    
+    public static void showSearchSettings(){
+        /*
+        if (searchSettingsFrame!=null) 
+            searchSettingsFrame.getContentPane().removeAll();
+        
+        searchSettingsFrame = new SearchSettings();
+        */
+        searchSettingsFrame.pack();
+        //repoList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        searchSettingsFrame.setSize(500, 400);
+        searchSettingsFrame.setVisible(true);
+        searchSettingsFrame.setTitle("Settings");
     }
     
     private static BufferedImage resizeImage(BufferedImage originalImage, int type){
@@ -171,27 +185,28 @@ public class Controller {
         return userList;
     }
 
-    static void search(String url) throws IOException{
+    static void search(String searched) throws IOException{
         try {
             // Get UserList
             
-            // Tanpa autentifikasi
-            // String keyword = "https://api.github.com/search/users?q="+url;
+            // Tanpa autentifikasi [Tidak dipakai] 
+            // String keyword = "https://api.github.com/search/users?q="+searched+SearchSettings.getParameter();
             // String authString = "";
             
             // Dengan Authentifikasi
-            // Menggunakan clientSecret
+            // Menggunakan clientSecret [Dipakai]
             String clientId = "919135325e47a148f207";
             String clientSecret = "e1d85be38fdcc8e3b41bfa95310a44bb9fefd351";
             String authStringApp = "?client_id="+clientId+"&client_secret="+clientSecret;
             String authString = "";
             readJsonFromUrl("https://api.github.com/rate_limit"+authStringApp);
             
-            // Menggunakan Personal Access Token
+            // Menggunakan Personal Access Token [Tidak dipakai] 
             // String personalAccessToken = "";
             // String authString = "?access_token="+personalAccessToken;
             
-            String keyword = "https://api.github.com/search/users?q="+url+authString;
+            String keyword = "https://api.github.com/search/users?q="+searched+SearchSettings.getParameter()+authString;
+            System.out.println(keyword);
             ArrayList<User> userList = getUserList(keyword);
             
             // Refresh JPanel 

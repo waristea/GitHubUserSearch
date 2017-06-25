@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -34,7 +35,8 @@ import javax.swing.border.EmptyBorder;
 public class Header implements ActionListener, KeyListener, MouseListener{	
     JPanel headerPanel = new JPanel();
     JFrame headerFrame = new JFrame();
-    JButton advancedSearchButton;
+    ArrayList<JButton> position = new ArrayList<>();
+    JButton searchSettingsButton;
     JTextField searchBox;
     Image gitHubImage;
     String searched = "";
@@ -72,13 +74,13 @@ public class Header implements ActionListener, KeyListener, MouseListener{
 
         // JButton - Advanced Search Button
 
-        advancedSearchButton = new JButton("Advanced Search");
-        advancedSearchButton.setForeground(Color.WHITE);
-        advancedSearchButton.setOpaque(false);
-        advancedSearchButton.setContentAreaFilled(false);
-        advancedSearchButton.setBorderPainted(false);
-        advancedSearchButton.addMouseListener(this);
-
+        searchSettingsButton = new JButton("Advanced Search");
+        searchSettingsButton.setForeground(Color.WHITE);
+        searchSettingsButton.setOpaque(false);
+        searchSettingsButton.setContentAreaFilled(false);
+        searchSettingsButton.setBorderPainted(false);
+        searchSettingsButton.addMouseListener(this);
+        
         // Placement
         headerPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -99,7 +101,8 @@ public class Header implements ActionListener, KeyListener, MouseListener{
 
         gbc.gridx = 2;
         gbc.gridy = 0;
-        headerPanel.add(advancedSearchButton, gbc);
+        headerPanel.add(searchSettingsButton, gbc);
+        position.add(searchSettingsButton);
 
         headerPanel.setBackground(new Color(36, 41, 46));
         headerPanel.setVisible(true);
@@ -140,29 +143,25 @@ public class Header implements ActionListener, KeyListener, MouseListener{
     // MouseListener
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Controller.showSearchSettings();
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void mousePressed(MouseEvent e) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        advancedSearchButton.setForeground(Color.GRAY);
-        advancedSearchButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        searchSettingsButton.setForeground(Color.GRAY);
+        searchSettingsButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        advancedSearchButton.setForeground(Color.WHITE);
-        advancedSearchButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        searchSettingsButton.setForeground(Color.WHITE);
+        searchSettingsButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
     
     // Getter
